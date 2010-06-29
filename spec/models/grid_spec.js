@@ -16,13 +16,15 @@ Screw.Unit(function() {
 								             '--');
 	});
 
-	it("should keep cell alive with two live neighbours", function() {
-		var grid = Grid.parse('++:' +
-				 	 		  '+-');
+	it("should keep cell alive with two live horizontal neighbours", function() {
+		var grid = Grid.parse('+++:' +
+				 	 		  '---:' +
+							  '---');
 		var nextGrid = grid.nextGrid();
-		
-		expect(nextGrid.display()).to(equal, '++:' +
-								             '+-');
+	
+		expect(nextGrid.display()).to(equal, '-+-:' +
+								             '---:' +
+											 '---');
 	});
 	
   });

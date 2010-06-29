@@ -3,6 +3,8 @@ Cell = function(row, column, state, grid) {
 	var neighbours = [];
 	this.state = state;
 	this.nextState = '';
+	this.row = row;
+	this.column = column;
 	
 	this.toString = function() {
 		return state;
@@ -11,16 +13,9 @@ Cell = function(row, column, state, grid) {
 	this.update = function() {
 		state = that.nextState;
 	};
-	
-	this.calculateNextState = function(){
-		var cellStateToLeft = getCellState(row, column - 1);
-		var cellStateToRight = getCellState(row, column + 1);
 		
-		if(that.state === '+' && (cellStateToLeft === '+' && cellStateToRight === '+')){
-			that.nextState = '+';
-		} else {
-			that.nextState = '-';
-		}
+	this.isAlive = function() {
+		return state === '+';
 	};
 	
 	function getCellState(row, otherColumn){

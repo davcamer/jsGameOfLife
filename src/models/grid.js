@@ -23,20 +23,35 @@ Grid = function() {
 			newGrid.cells[rowNumber] = [];
 			
 			for(colNumber in row) {
-				if(hasNoLiveNeighbors(row[colNumber])) {
+				if(shouldCellDie(row[colNumber])) {
 					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
 				} else {
-					newGrid.cells[rowNumber][colNumber] = that.cells[rowNumber][colNumber];
+					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
 				}
 			}
 		}
 		return newGrid;
 	}
 	
-	function hasNoLiveNeighbors() {
-		return true;
+	function shouldCellDie(cell) {
+		return !(cellToLeftIsAlive(cell) && cellToRightIsAlive(cell));
 	}
 	
+	function cellToLeftIsAlive(cell){
+		var cellToLeft = that.cells[cell.row][cell.column-1];
+		if(!cellToLeft){
+			return false;
+		}
+		return cellToLeft.isAlive();
+	}
+	
+	function cellToRightIsAlive(cell){
+		var cellToRight = that.cells[cell.row][cell.column+1];
+		if(!cellToRight){
+			return false;
+		}
+		return cellToRight.isAlive();
+	}
 };
 
 Grid.parse = function(aGridString) {
