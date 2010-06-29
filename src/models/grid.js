@@ -15,6 +15,11 @@ Grid = function() {
 		}
 		return lines.join(":");
 	};
+	
+	this.clone = function(){
+		var clonedGrid = new Grid();
+		return clonedGrid;
+	};
 };
 
 Grid.parse = function(aGridString) {

@@ -21,14 +21,14 @@ Screw.Unit(function() {
 								        '---');
 	}); 
 
-	it("should keep cells alive when they have two horizontal alive neighbors", function() {
-		var sim = new Simulation('---:' +
-				   			     '+++:' +
-				   			     '---');
-		sim.runGeneration();
-		expect(sim.display()).to(equal, '---:' +
-								        '-+-:' +
-								        '---');
-	});
+	// it("should keep cells alive when they have two horizontal alive neighbors", function() {
+	// 		var sim = new Simulation('---:' +
+	// 				   			     '+++:' +
+	// 				   			     '---');
+	// 		sim.runGeneration();
+	// 		expect(sim.display()).to(equal, '---:' +
+	// 								        '-+-:' +
+	// 								        '---');
+	// 	});
   });
 });

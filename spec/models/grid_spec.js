@@ -6,5 +6,14 @@ Screw.Unit(function() {
 		expect(grid.display()).to(equal, '--:' +
 								       	 '-+');
 	});
+	
+	it("should create a clone", function() {
+		var originalGrid = Grid.parse('--:' +
+		                              '--');
+		var clonedGrid = originalGrid.clone();
+		
+		expect(clonedGrid !== originalGrid).to(equal, true);
+		expect(clonedGrid.cells !== originalGrid.cells).to(equal, true);  
+	});
   });
 });
