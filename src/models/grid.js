@@ -34,23 +34,15 @@ Grid = function() {
 	}
 	
 	function shouldCellDie(cell) {
-		return !(cellToLeftIsAlive(cell) && cellToRightIsAlive(cell));
+		return !(neighbourIsLive(cell, -1) && neighbourIsLive(cell, +1));
 	}
 	
-	function cellToLeftIsAlive(cell){
-		var cellToLeft = that.cells[cell.row][cell.column-1];
-		if(!cellToLeft){
+	function neighbourIsLive(cell, xDelta){
+		var neighbourCell = that.cells[cell.row][cell.column + xDelta];
+		if(!neighbourCell){
 			return false;
 		}
-		return cellToLeft.isAlive();
-	}
-	
-	function cellToRightIsAlive(cell){
-		var cellToRight = that.cells[cell.row][cell.column+1];
-		if(!cellToRight){
-			return false;
-		}
-		return cellToRight.isAlive();
+		return neighbourCell.isAlive();
 	}
 };
 
