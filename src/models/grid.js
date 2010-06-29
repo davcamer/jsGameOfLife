@@ -16,10 +16,27 @@ Grid = function() {
 		return lines.join(":");
 	};
 	
-	this.clone = function(){
-		var clonedGrid = new Grid();
-		return clonedGrid;
-	};
+	this.nextGrid = function() {
+		var newGrid = new Grid();
+		for (rowNumber in that.cells) {
+			var row = that.cells[rowNumber];
+			newGrid.cells[rowNumber] = [];
+			
+			for(colNumber in row) {
+				if(hasNoLiveNeighbors(row[colNumber])) {
+					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
+				} else {
+					newGrid.cells[rowNumber][colNumber] = that.cells[rowNumber][colNumber];
+				}
+			}
+		}
+		return newGrid;
+	}
+	
+	function hasNoLiveNeighbors() {
+		return true;
+	}
+	
 };
 
 Grid.parse = function(aGridString) {

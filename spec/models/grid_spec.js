@@ -7,13 +7,23 @@ Screw.Unit(function() {
 								       	 '-+');
 	});
 	
-	it("should create a clone", function() {
-		var originalGrid = Grid.parse('--:' +
-		                              '--');
-		var clonedGrid = originalGrid.clone();
+	it("should kill active cells when they have no live neighbors", function() {
+		var grid = Grid.parse('+-:' +
+				 	 		  '--');
+		var nextGrid = grid.nextGrid();
 		
-		expect(clonedGrid !== originalGrid).to(equal, true);
-		expect(clonedGrid.cells !== originalGrid.cells).to(equal, true);  
+		expect(nextGrid.display()).to(equal, '--:' +
+								             '--');
 	});
+
+	it("should keep cell alive with two live neighbours", function() {
+		var grid = Grid.parse('++:' +
+				 	 		  '+-');
+		var nextGrid = grid.nextGrid();
+		
+		expect(nextGrid.display()).to(equal, '++:' +
+								             '+-');
+	});
+	
   });
 });
