@@ -34,11 +34,19 @@ Grid = function() {
 	}
 	
 	function shouldCellDie(cell) {
-		return !(neighbourIsLive(cell, -1) && neighbourIsLive(cell, +1));
+		var doesNotHaveTwoHorizontalNeighbours = !(neighbourIsLive(cell, -1, 0) && neighbourIsLive(cell, +1, 0));
+		var doesNotHaveTwoVerticalNeighbours = !(neighbourIsLive(cell, 0, -1) && neighbourIsLive(cell, 0, +1));
+		return doesNotHaveTwoHorizontalNeighbours && doesNotHaveTwoVerticalNeighbours;
 	}
 	
-	function neighbourIsLive(cell, xDelta){
-		var neighbourCell = that.cells[cell.row][cell.column + xDelta];
+	function neighbourIsLive(cell, xDelta, yDelta){
+		var neighbourRow = that.cells[cell.row + yDelta];
+		
+		if(!neighbourRow){
+			return false;
+		}
+		
+		var neighbourCell = neighbourRow[cell.column + xDelta];
 		if(!neighbourCell){
 			return false;
 		}
