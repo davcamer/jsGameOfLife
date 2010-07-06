@@ -36,7 +36,9 @@ Grid = function() {
 	function shouldCellDie(cell) {
 		var doesNotHaveTwoHorizontalNeighbours = !(neighbourIsLive(cell, -1, 0) && neighbourIsLive(cell, +1, 0));
 		var doesNotHaveTwoVerticalNeighbours = !(neighbourIsLive(cell, 0, -1) && neighbourIsLive(cell, 0, +1));
-		return doesNotHaveTwoHorizontalNeighbours && doesNotHaveTwoVerticalNeighbours;
+		var doesNotHaveTwoDiagonalNeighbours = !(neighbourIsLive(cell, -1, -1) && neighbourIsLive(cell, +1, +1));
+		
+		return doesNotHaveTwoHorizontalNeighbours && doesNotHaveTwoVerticalNeighbours && doesNotHaveTwoDiagonalNeighbours;
 	}
 	
 	function neighbourIsLive(cell, xDelta, yDelta){

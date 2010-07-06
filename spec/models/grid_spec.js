@@ -38,5 +38,15 @@ Screw.Unit(function() {
 											 '---');
 	});
 	
+	it("should keep cell alive with two live diagonal neighbours", function() {
+		var grid = Grid.parse('+--:' +
+				 	 		  '-+-:' +
+							  '--+');
+		var nextGrid = grid.nextGrid();
+	
+		expect(nextGrid.display()).to(equal, '---:' +
+								             '-+-:' +
+											 '---');
+	});
   });
 });
