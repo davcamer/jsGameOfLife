@@ -23,10 +23,15 @@ Grid = function() {
 			newGrid.cells[rowNumber] = [];
 			
 			for(colNumber in row) {
-				if(shouldCellDie(row[colNumber])) {
-					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
+				var oldCell = row[colNumber];
+				if(oldCell.isAlive()) {
+					if(shouldCellDie(oldCell)) {
+						newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
+					} else {
+						newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
+					}
 				} else {
-					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
+					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
 				}
 			}
 		}
@@ -34,25 +39,29 @@ Grid = function() {
 	}
 	
 	function shouldCellDie(cell) {
-		var doesNotHaveTwoHorizontalNeighbours = !(neighbourIsLive(cell, -1, 0) && neighbourIsLive(cell, +1, 0));
-		var doesNotHaveTwoVerticalNeighbours = !(neighbourIsLive(cell, 0, -1) && neighbourIsLive(cell, 0, +1));
-		var doesNotHaveTwoDiagonalNeighbours = !(neighbourIsLive(cell, -1, -1) && neighbourIsLive(cell, +1, +1));
-		
-		return doesNotHaveTwoHorizontalNeighbours && doesNotHaveTwoVerticalNeighbours && doesNotHaveTwoDiagonalNeighbours;
+		var countOfLiveCells = neighbourIsLive(cell, -1, -1);
+	    countOfLiveCells += neighbourIsLive(cell, -1, 0);
+	    countOfLiveCells += neighbourIsLive(cell, 0, -1);
+		countOfLiveCells += neighbourIsLive(cell, -1, +1);
+		countOfLiveCells += neighbourIsLive(cell, +1, 0);
+		countOfLiveCells += neighbourIsLive(cell, +1, +1);
+		countOfLiveCells += neighbourIsLive(cell, 0, +1);
+		countOfLiveCells += neighbourIsLive(cell, +1, -1);
+		return countOfLiveCells < 2 && cell.isAlive();
 	}
 	
 	function neighbourIsLive(cell, xDelta, yDelta){
 		var neighbourRow = that.cells[cell.row + yDelta];
 		
 		if(!neighbourRow){
-			return false;
+			return 0;
 		}
 		
 		var neighbourCell = neighbourRow[cell.column + xDelta];
 		if(!neighbourCell){
-			return false;
+			return 0;
 		}
-		return neighbourCell.isAlive();
+		return neighbourCell.isAlive() ? 1 : 0;
 	}
 };
 
