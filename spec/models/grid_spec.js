@@ -49,5 +49,16 @@ Screw.Unit(function() {
 											 '---');
 	});
 	
+	it("should keep cell alive with three live neighbours", function() {
+		var grid = Grid.parse('+-+:' +
+				 	 		  '-+-:' +
+							  '--+');
+		var nextGrid = grid.nextGrid();
+	
+		expect(nextGrid.display()).to(equal, '---:' +
+								             '-+-:' +
+											 '---');
+	});
+	
   });
 });
