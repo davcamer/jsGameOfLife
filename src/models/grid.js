@@ -23,7 +23,7 @@ Grid = function() {
 			newGrid.cells[rowNumber] = [];
 			
 			for(colNumber in row) {
-				if(shouldCellLive(row[colNumber])) {
+				if(shouldCellLive(row[colNumber]) || shouldCellComeAlive(row[colNumber])) {
 					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
 				} else {
 					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
@@ -43,6 +43,18 @@ Grid = function() {
 		countOfLiveCells += neighbourIsLive(cell, 0, +1);
 		countOfLiveCells += neighbourIsLive(cell, +1, -1);
 		return countOfLiveCells >= 2 && countOfLiveCells < 4 && cell.isAlive();
+	}
+	
+	function shouldCellComeAlive(cell) {
+		var countOfLiveCells = neighbourIsLive(cell, -1, -1);
+	    countOfLiveCells += neighbourIsLive(cell, -1, 0);
+	    countOfLiveCells += neighbourIsLive(cell, 0, -1);
+		countOfLiveCells += neighbourIsLive(cell, -1, +1);
+		countOfLiveCells += neighbourIsLive(cell, +1, 0);
+		countOfLiveCells += neighbourIsLive(cell, +1, +1);
+		countOfLiveCells += neighbourIsLive(cell, 0, +1);
+		countOfLiveCells += neighbourIsLive(cell, +1, -1);
+		return countOfLiveCells === 3  && !cell.isAlive();
 	}
 	
 	function neighbourIsLive(cell, xDelta, yDelta){

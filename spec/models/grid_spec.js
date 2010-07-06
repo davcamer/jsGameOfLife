@@ -15,30 +15,8 @@ Screw.Unit(function() {
 		expect(nextGrid.display()).to(equal, '--:' +
 								             '--');
 	});
-
-	it("should keep cell alive with two live horizontal neighbours", function() {
-		var grid = Grid.parse('+++:' +
-				 	 		  '---:' +
-							  '---');
-		var nextGrid = grid.nextGrid();
 	
-		expect(nextGrid.display()).to(equal, '-+-:' +
-								             '---:' +
-											 '---');
-	});
-	
-	it("should keep cell alive with two live vertical neighbours", function() {
-		var grid = Grid.parse('-+-:' +
-				 	 		  '-+-:' +
-							  '-+-');
-		var nextGrid = grid.nextGrid();
-	
-		expect(nextGrid.display()).to(equal, '---:' +
-								             '-+-:' +
-											 '---');
-	});
-	
-	it("should keep cell alive with two live diagonal neighbours", function() {
+	it("should keep cell alive with two live neighbours", function() {
 		var grid = Grid.parse('+--:' +
 				 	 		  '-+-:' +
 							  '--+');
@@ -55,8 +33,8 @@ Screw.Unit(function() {
 							  '--+');
 		var nextGrid = grid.nextGrid();
 	
-		expect(nextGrid.display()).to(equal, '---:' +
-								             '-+-:' +
+		expect(nextGrid.display()).to(equal, '-+-:' +
+								             '-++:' +
 											 '---');
 	});
 	
@@ -66,10 +44,20 @@ Screw.Unit(function() {
 							  '+-+');
 		var nextGrid = grid.nextGrid();
 	
-		expect(nextGrid.display()).to(equal, '---:' +
-								             '---:' +
-											 '---');
+		expect(nextGrid.display()).to(equal, '-+-:' +
+								             '+-+:' +
+											 '-+-');
 	});
 	
+	it("should regenerate cell with three live neighbours", function() {
+		var grid = Grid.parse('+-+:' +
+				 	 		  '---:' +
+							  '+--');
+		var nextGrid = grid.nextGrid();
+	
+		expect(nextGrid.display()).to(equal, '---:' +
+								             '-+-:' +
+											 '---');
+	});
   });
 });
