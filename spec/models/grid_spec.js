@@ -60,5 +60,16 @@ Screw.Unit(function() {
 											 '---');
 	});
 	
+	it("should kill cell with more than three live neighbours", function() {
+		var grid = Grid.parse('+-+:' +
+				 	 		  '-+-:' +
+							  '+-+');
+		var nextGrid = grid.nextGrid();
+	
+		expect(nextGrid.display()).to(equal, '---:' +
+								             '---:' +
+											 '---');
+	});
+	
   });
 });
