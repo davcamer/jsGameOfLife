@@ -23,19 +23,18 @@ Grid = function() {
 			newGrid.cells[rowNumber] = [];
 			
 			for(colNumber in row) {
-				var oldCell = row[colNumber];
-				if(oldCell.isAlive()) {
-					if(shouldCellDie(oldCell)) {
-						newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
-					} else {
-						newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
-					}
+				if(shouldCellLive(row[colNumber])) {
+					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '+', newGrid);
 				} else {
 					newGrid.cells[rowNumber][colNumber] = new Cell(new Number(rowNumber), new Number(colNumber), '-', newGrid);
 				}
 			}
 		}
 		return newGrid;
+	}
+	
+	function shouldCellLive(cell){
+		return !shouldCellDie(cell) && cell.isAlive();
 	}
 	
 	function shouldCellDie(cell) {
