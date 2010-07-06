@@ -33,11 +33,7 @@ Grid = function() {
 		return newGrid;
 	}
 	
-	function shouldCellLive(cell){
-		return !shouldCellDie(cell) && cell.isAlive();
-	}
-	
-	function shouldCellDie(cell) {
+	function shouldCellLive(cell) {
 		var countOfLiveCells = neighbourIsLive(cell, -1, -1);
 	    countOfLiveCells += neighbourIsLive(cell, -1, 0);
 	    countOfLiveCells += neighbourIsLive(cell, 0, -1);
@@ -46,7 +42,7 @@ Grid = function() {
 		countOfLiveCells += neighbourIsLive(cell, +1, +1);
 		countOfLiveCells += neighbourIsLive(cell, 0, +1);
 		countOfLiveCells += neighbourIsLive(cell, +1, -1);
-		return countOfLiveCells < 2 && cell.isAlive();
+		return countOfLiveCells >= 2 && cell.isAlive();
 	}
 	
 	function neighbourIsLive(cell, xDelta, yDelta){
