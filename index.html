@@ -4,6 +4,55 @@
 	
 </head>
 <body>
-	<canvas width="600" height="400" id="c"></canvas>
+	<img src="alive.gif" width="600" height="400" id="sunrise" style="display:none">
+	<img src="dead.gif" width="600" height="400" id="sunset" style="display:none">
+	<canvas width="600" height="400" id="c" style="border: 1px gray dashed"><blink>You don't support canvas!!</blink></canvas>
+	<script src="lib/jquery-1.2.6.js"></script>
+    
+    <script src="src/models/cell.js"></script>
+	<script src="src/models/grid.js"></script>
+	<script>
+		function randomLifeString() {
+			var life = "";
+			for (var y = 0; y < 40; y++) {
+				for (var x = 0; x < 60; x++) {
+					life = life + (Math.random() < 0.15 ? "+" : "-");
+				}
+				if (y != 39) { 
+					life = life + ":";
+				}
+			}
+			return life;
+		}
+	
+		var c  = document.getElementById("c").getContext('2d');
+		var grid = Grid.parse(randomLifeString());
+		var sunrise = document.getElementById("sunrise");
+		var sunset = document.getElementById("sunset");
+		window.onload = function() {
+			c.drawImage(sunrise, 0, 0, 600, 400);
+			setTimeout(nextRound, 1000);
+		}
+		
+		function nextRound() {
+			for (rowNumber in grid.cells) {
+				var row = grid.cells[rowNumber];
+				for (colNumber in row) {
+					if (grid.cells[rowNumber][colNumber].isAlive()) {
+						c.globalAlpha = 0.2;
+						drawTile(sunset, colNumber, rowNumber);
+						c.globalAlpha = 1.0;
+					}
+				}
+ 			}
+			grid = grid.nextGrid();
+			setTimeout(nextRound, 200);
+		}
+	
+		function drawTile(image, column, row){
+			var tileSize = 10;
+			c.drawImage(image, column * tileSize, row * tileSize, tileSize, tileSize, column * tileSize, row * tileSize, tileSize, tileSize);
+		}
+	</script>
 </body>
 </html>
