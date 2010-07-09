@@ -35,13 +35,12 @@
 		}
 		
 		function nextRound() {
+			c.globalAlpha = 0.2;
 			for (rowNumber in grid.cells) {
 				var row = grid.cells[rowNumber];
 				for (colNumber in row) {
 					if (grid.cells[rowNumber][colNumber].isAlive()) {
-						c.globalAlpha = 0.2;
 						drawTile(sunset, colNumber, rowNumber);
-						c.globalAlpha = 1.0;
 					}
 				}
  			}
